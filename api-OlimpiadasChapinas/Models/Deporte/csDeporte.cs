@@ -122,12 +122,10 @@ namespace api_OlimpiadasChapinas.Models.Deporte
             return result;
         }
 
-        public DataSet ListarDeporte()
+        public List<requestDeporte> ListarDeporte()
         {
-            DataSet result = new DataSet();
-            string conexion = "";
-
-            conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
+            List<requestDeporte> deportes = new List<requestDeporte>();
+            string conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(conexion))
             {
@@ -139,24 +137,66 @@ namespace api_OlimpiadasChapinas.Models.Deporte
 
                     using (SqlCommand cmd = new SqlCommand(cadena, con))
                     {
-                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            adapter.Fill(result);
-
-                            if (result.Tables.Count > 0)
+                            while (reader.Read()) 
                             {
-                                result.Tables[0].TableName = "Lista Deporte por ID";
+                                deportes.Add(new requestDeporte
+                                {
+                                    idDeporte = Convert.ToInt32(reader["idDeporte"]),
+                                    nombre = reader["nombre"].ToString(),
+                                    categoria = reader["categoria"].ToString(),
+                                    descripcion = reader["descripcion"].ToString(),
+                                    cantidadJugadores = Convert.ToInt32(reader["cantidadJugadores"])
+                                });
+
                             }
                         }
                     }
-                    return result;
+                    return deportes;
                 }
-                catch (Exception ex)
+                catch 
                 {
-                    return null;
+                    return deportes;
                 }
             }
         }
+
+        //public DataSet ListarDeporte()
+        //{
+        //    DataSet result = new DataSet();
+        //    string conexion = "";
+
+        //    conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
+
+        //    using (SqlConnection con = new SqlConnection(conexion))
+        //    {
+        //        try
+        //        {
+        //            con.Open();
+
+        //            string cadena = "SELECT * FROM Deporte;";
+
+        //            using (SqlCommand cmd = new SqlCommand(cadena, con))
+        //            {
+        //                using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+        //                {
+        //                    adapter.Fill(result);
+
+        //                    if (result.Tables.Count > 0)
+        //                    {
+        //                        result.Tables[0].TableName = "Lista Deporte por ID";
+        //                    }
+        //                }
+        //            }
+        //            return result;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //}
 
         public DataSet ListarDeportePorID(string idDeporte)
         {

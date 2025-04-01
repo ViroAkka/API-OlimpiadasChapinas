@@ -9,6 +9,7 @@ namespace api_OlimpiadasChapinas.Models.Deporte
     {
         public class requestDeporte
         {
+            public int idDeporte { get; set; }
             public string nombre { get; set; }
             public string categoria { get; set; }
             public string descripcion { get; set; }
