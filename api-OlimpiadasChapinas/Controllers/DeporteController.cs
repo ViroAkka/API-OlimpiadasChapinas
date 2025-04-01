@@ -36,16 +36,7 @@ namespace api_OlimpiadasChapinas.Controllers
         [Route("rest/api/ListarDeporte")]
         public IHttpActionResult ListarDeporte()
         {
-            var deportes = new csDeporte().ListarDeporte();
-            if (deportes != null)
-            {
-                return Ok(deportes);
-            }
-            else
-            {
-                ModelState.AddModelError("", "No se pudo obtener la información del API.");
-                return BadRequest(ModelState);
-            }
+            return Ok(new csDeporte().ListarDeporte());
         }
 
         [HttpGet]
