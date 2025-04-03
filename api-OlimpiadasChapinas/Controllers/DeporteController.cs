@@ -20,14 +20,14 @@ namespace api_OlimpiadasChapinas.Controllers
 
         [HttpPost]
         [Route("rest/api/ActualizarDeporte")]
-        public IHttpActionResult ActualizarDeporte(requestDeporteByID model)
+        public IHttpActionResult ActualizarDeporte(requestDeporte model)
         {
             return Ok(new csDeporte().ActualizarDeporte(model.idDeporte, model.nombre, model.categoria, model.descripcion, model.cantidadJugadores));
         }
 
         [HttpPost]
         [Route("rest/api/EliminarDeporte")]
-        public IHttpActionResult EliminarDeporte(requestEliminarDeporte model)
+        public IHttpActionResult EliminarDeporte(requestDeporte model)
         {
             return Ok(new csDeporte().EliminarDeporte(model.idDeporte));
         }
