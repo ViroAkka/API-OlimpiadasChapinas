@@ -9,17 +9,6 @@ namespace api_OlimpiadasChapinas.Models.Evento
     {
         public class requestEvento
         {
-            public int idDeporte { get; set; }
-            public int idEventoPadre { get; set; }
-            public string nombre { get; set; }
-            public string fechaInicio { get; set; }
-            public string fechaFin { get; set; }
-            public int cantidadParticipantes { get; set; }
-            public double montoInscripcion { get; set; }
-        }
-
-        public class requestEventoByID
-        {
             public int idEvento { get; set; }
             public int idDeporte { get; set; }
             public int idEventoPadre { get; set; }

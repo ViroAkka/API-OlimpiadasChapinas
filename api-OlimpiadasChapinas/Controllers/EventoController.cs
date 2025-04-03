@@ -26,7 +26,7 @@ namespace api_OlimpiadasChapinas.Controllers
 
         [HttpPost]
         [Route("rest/api/ActualizarEvento")]
-        public IHttpActionResult ActualizarEvento(requestEventoByID model)
+        public IHttpActionResult ActualizarEvento(requestEvento model)
         {
             if (model.idEventoPadre != 0)
             {
@@ -39,7 +39,7 @@ namespace api_OlimpiadasChapinas.Controllers
 
         [HttpPost]
         [Route("rest/api/EliminarEvento")]
-        public IHttpActionResult EliminarEvento(requestEventoByID model)
+        public IHttpActionResult EliminarEvento(requestEvento model)
         {
             return Ok(new csEvento().EliminarEvento(model.idEvento));
         }
