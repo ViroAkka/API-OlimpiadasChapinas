@@ -138,7 +138,42 @@ namespace api_OlimpiadasChapinas.Models.FormaPago
 
                             if (result.Tables.Count > 0)
                             {
-                                result.Tables[0].TableName = "Lista";
+                                result.Tables[0].TableName = "Lista de Formas de Pago";
+                            }
+                        }
+                    }
+                    return result;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        public DataSet ListarFormaPagoPorID(int idFormaPago)
+        {
+            DataSet result = new DataSet();
+            string conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(conexion))
+            {
+                try
+                {
+                    con.Open();
+
+                    string cadena = "SELECT * FROM FormaPago WHERE idFormaPago = @idFormaPago";
+
+                    using (SqlCommand cmd = new SqlCommand(cadena, con))
+                    {
+                        cmd.Parameters.Add("@idFormaPago", SqlDbType.Int).Value = idFormaPago;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(result);
+
+                            if (result.Tables.Count > 0)
+                            {
+                                result.Tables[0].TableName = "Lista de Formas de Pago Por ID";
                             }
                         }
                     }

@@ -9,13 +9,10 @@ namespace api_OlimpiadasChapinas.Models.FormaPago
     {
         public class requestFormaPago
         {
-            public string descripcion { get; set; }
-        }
-        public class requestFormaPagoByID
-        {
             public int idFormaPago { get; set; }
             public string descripcion { get; set; }
         }
+        
         public class responseFormaPago
         {
             public int respuesta { get; set; }

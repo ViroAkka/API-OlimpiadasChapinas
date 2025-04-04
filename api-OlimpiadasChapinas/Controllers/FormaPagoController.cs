@@ -19,14 +19,14 @@ namespace api_OlimpiadasChapinas.Controllers
 
         [HttpPost]
         [Route("rest/api/ActualizarFormaPago")]
-        public IHttpActionResult ActualizarFormaPago(requestFormaPagoByID model)
+        public IHttpActionResult ActualizarFormaPago(requestFormaPago model)
         {
             return Ok(new csFormaPago().ActualizarFormaPago(model.idFormaPago, model.descripcion));
         }
 
         [HttpPost]
         [Route("rest/api/EliminarFormaPago")]
-        public IHttpActionResult EliminarFormaPago(requestFormaPagoByID model)
+        public IHttpActionResult EliminarFormaPago(requestFormaPago model)
         {
             return Ok(new csFormaPago().EliminarFormaPago(model.idFormaPago));
         }
@@ -36,6 +36,13 @@ namespace api_OlimpiadasChapinas.Controllers
         public IHttpActionResult ListarFormaPago()
         {
             return Ok(new csFormaPago().ListarFormaPago());
+        }
+
+        [HttpGet]
+        [Route("rest/api/ListarFormaPagoPorID")]
+        public IHttpActionResult ListarFormaPagoPorID(int idFormaPago)
+        {
+            return Ok(new csFormaPago().ListarFormaPagoPorID(idFormaPago));
         }
     }
 }
