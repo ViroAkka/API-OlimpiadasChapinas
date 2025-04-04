@@ -28,7 +28,7 @@ namespace api_OlimpiadasChapinas.Controllers
         [Route("rest/api/ActualizarEvento")]
         public IHttpActionResult ActualizarEvento(requestEvento model)
         {
-            if (model.idEventoPadre != 0)
+            if (model.idEventoPadre > 0)
             {
                 return Ok(new csEvento().ActualizarEvento(model.idEvento, model.idDeporte, model.idEventoPadre, model.nombre, model.fechaInicio, model.fechaFin, model.cantidadParticipantes, model.montoInscripcion));
             } else
@@ -49,6 +49,13 @@ namespace api_OlimpiadasChapinas.Controllers
         public IHttpActionResult ListarEvento()
         {
             return Ok(new csEvento().ListarEvento());
+        }
+
+        [HttpGet]
+        [Route("rest/api/ListarEventoPorID")]
+        public IHttpActionResult ListarEventoPorID(int idEvento)
+        {
+            return Ok(new csEvento().ListarEventoPorID(idEvento));
         }
     }
 }

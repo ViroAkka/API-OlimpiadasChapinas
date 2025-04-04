@@ -41,7 +41,7 @@ namespace api_OlimpiadasChapinas.Controllers
 
         [HttpGet]
         [Route("rest/api/ListarDeportePorID")]
-        public IHttpActionResult ListarDeportePorID(string idDeporte)
+        public IHttpActionResult ListarDeportePorID(int idDeporte)
         {
             return Ok(new csDeporte().ListarDeportePorID(idDeporte));
         }

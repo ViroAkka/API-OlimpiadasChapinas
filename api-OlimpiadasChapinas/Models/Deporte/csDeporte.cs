@@ -158,7 +158,7 @@ namespace api_OlimpiadasChapinas.Models.Deporte
             }
         }
 
-        public DataSet ListarDeportePorID(string idDeporte)
+        public DataSet ListarDeportePorID(int idDeporte)
         {
             DataSet result = new DataSet();
             string conexion = "";

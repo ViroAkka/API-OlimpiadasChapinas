@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using static api_OlimpiadasChapinas.Models.Evento.csEstructuraEvento;
@@ -132,6 +133,11 @@ namespace api_OlimpiadasChapinas.Models.Evento
         {
             fecha fechaFormateada = new fecha();
 
+            if (fechaIngresada.Substring(1,1) == "/" || fechaIngresada.Substring(1, 1) == "-")
+            {
+                fechaIngresada = "0" + fechaIngresada;
+            }
+
             if (fechaIngresada.Substring(2, 1) == "/" || fechaIngresada.Substring(2, 1) == "-")
             {
                 fechaFormateada.day = int.Parse(fechaIngresada.Substring(0,2));
@@ -234,6 +240,7 @@ namespace api_OlimpiadasChapinas.Models.Evento
 
                     using (SqlCommand cmd = new SqlCommand(cadena, con))
                     {
+                        cmd.Parameters.Add("@idEvento", SqlDbType.Int).Value = idEvento;
                         cmd.Parameters.Add("@idDeporte", SqlDbType.Int).Value = idDeporte;
                         cmd.Parameters.Add("@nombre", SqlDbType.VarChar, 200).Value = nombre;
                         cmd.Parameters.Add(new SqlParameter
@@ -255,9 +262,8 @@ namespace api_OlimpiadasChapinas.Models.Evento
                             SqlDbType = SqlDbType.Decimal,
                             Precision = 6,
                             Scale = 2,
-                            Value = montoInscripcion
+                            Value = Math.Round(montoInscripcion, 2)
                         });
-                        cmd.Parameters.Add("@idEvento", SqlDbType.Int).Value = idEvento;
 
                         result.respuesta = cmd.ExecuteNonQuery();
                         result.descripcionRespuesta = "Operación realizada exitosamente";
@@ -267,6 +273,7 @@ namespace api_OlimpiadasChapinas.Models.Evento
                 {
                     result.respuesta = 0;
                     result.descripcionRespuesta = $"Ocurrió un error en la transacción: {ex.Message.ToString()}";
+                    Debug.WriteLine(ex.ToString());
                 }
             }
 
@@ -338,6 +345,41 @@ namespace api_OlimpiadasChapinas.Models.Evento
                 }
             }
         }
+
+        public DataSet ListarEventoPorID(int idEvento)
+        {
+            DataSet result = new DataSet();
+            string conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(conexion))
+            {
+                try
+                {
+                    con.Open();
+
+                    string cadena = "SELECT * FROM Evento WHERE idEvento = @idEvento;";
+
+                    using (SqlCommand cmd = new SqlCommand(cadena, con))
+                    {
+                        cmd.Parameters.Add("@idEvento", SqlDbType.Int).Value = idEvento;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(result);
+
+                            if (result.Tables.Count > 0)
+                            {
+                                result.Tables[0].TableName = "Lista Evento Por ID";
+                            }
+                        }
+                    }
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error en ListarEvento: {ex.Message.ToString()}");
+                    return null;
+                }
+            }
+        }
     }
 }
-
