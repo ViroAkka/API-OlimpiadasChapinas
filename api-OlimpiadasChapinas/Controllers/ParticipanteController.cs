@@ -19,14 +19,14 @@ namespace api_OlimpiadasChapinas.Controllers
 
         [HttpPost]
         [Route("rest/api/ActualizarParticipante")]
-        public IHttpActionResult ActualizarParticipante(requestParticipanteByID model)
+        public IHttpActionResult ActualizarParticipante(requestParticipante model)
         {
             return Ok(new csParticipante().ActualizarParticipante(model.idParticipante, model.idPais, model.idUsuario, model.fechaNacimiento, model.altura, model.peso, model.genero));
         }
 
         [HttpPost]
         [Route("rest/api/EliminarParticipante")]
-        public IHttpActionResult EliminarParticipante(requestEliminarParticipante model)
+        public IHttpActionResult EliminarParticipante(requestParticipante model)
         {
             return Ok(new csParticipante().EliminarParticipante(model.idParticipante));
         }
@@ -36,6 +36,13 @@ namespace api_OlimpiadasChapinas.Controllers
         public IHttpActionResult ListarParticipante()
         {
             return Ok(new csParticipante().ListarParticipante());
+        }
+
+        [HttpGet]
+        [Route("rest/api/ListarParticipantePorID")]
+        public IHttpActionResult ListarParticipantePorID(int idParticipante)
+        {
+            return Ok(new csParticipante().ListarParticipantePorID(idParticipante));
         }
     }
 }

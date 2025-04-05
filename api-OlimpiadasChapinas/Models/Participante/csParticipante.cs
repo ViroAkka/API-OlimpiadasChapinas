@@ -187,5 +187,43 @@ namespace api_OlimpiadasChapinas.Models.Participante
                 }
             }
         }
+
+        public DataSet ListarParticipantePorID(int idParticipante)
+        {
+            DataSet result = new DataSet();
+            string conexion = "";
+
+            conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(conexion))
+            {
+                try
+                {
+                    con.Open();
+
+                    string cadena = "SELECT * FROM Participante WHERE idParticipante = @idParticipante";
+
+                    using (SqlCommand cmd = new SqlCommand(cadena, con))
+                    {
+                        cmd.Parameters.Add("@idParticipante", SqlDbType.Int).Value = idParticipante;
+
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(result);
+
+                            if (result.Tables.Count > 0)
+                            {
+                                result.Tables[0].TableName = "Lista Participante";
+                            }
+                        }
+                    }
+                    return result;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
     }
 }
