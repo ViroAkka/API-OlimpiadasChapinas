@@ -12,7 +12,7 @@ namespace api_OlimpiadasChapinas.Models.Usuario
 {
     public class csUsuario
     {
-        public responseUsuario insertarUsuario(string nombre, string apellido, string email, string contraseña_hash, string telefono, string DNI)
+        public responseUsuario InsertarUsuario(string nombre, string apellido, string email, string contraseña_hash, string telefono, string DNI)
         {
             responseUsuario result = new responseUsuario();
             string conexion = "";
@@ -54,7 +54,7 @@ namespace api_OlimpiadasChapinas.Models.Usuario
             return result;
         }
 
-        public responseUsuario actualizarUsuario(string nombre, string apellido, string email, string contraseñaAlmacenada, string contraseñaActualizada, string telefono)
+        public responseUsuario ActualizarUsuario(string nombre, string apellido, string email, string contraseñaAlmacenada, string contraseñaActualizada, string telefono)
         {
             responseUsuario result = new responseUsuario();
             string conexion = "";
@@ -104,7 +104,7 @@ namespace api_OlimpiadasChapinas.Models.Usuario
             return result;
         }
 
-        public responseUsuario eliminarUsuario(string email)
+        public responseUsuario EliminarUsuario(string email)
         {
             responseUsuario result = new responseUsuario();
             string conexion = "";
@@ -137,7 +137,7 @@ namespace api_OlimpiadasChapinas.Models.Usuario
             return result;
         }
 
-        public DataSet listarUsuario()
+        public DataSet ListarUsuario()
         {
             DataSet result = new DataSet();
             string conexion = "";
@@ -170,10 +170,84 @@ namespace api_OlimpiadasChapinas.Models.Usuario
                 {
                     Console.WriteLine($"Error en listarUsuario: {ex.Message.ToString()}");
                     return null;
-                }
-                
+                }   
             }
+        }
 
+        public DataSet ListarUsuarioPorID(int idUsuario)
+        {
+            DataSet result = new DataSet();
+            string conexion = "";
+
+            conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(conexion))
+            {
+                try
+                {
+                    con.Open();
+
+                    string cadena = "SELECT * FROM Usuario WHERE idUsuario = @idUsuario;";
+
+                    using (SqlCommand cmd = new SqlCommand(cadena, con))
+                    {
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(result);
+
+                            if (result.Tables.Count > 0)
+                            {
+                                result.Tables[0].TableName = "Lista";
+                            }
+                        }
+                    }
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error en listarUsuario: {ex.Message.ToString()}");
+                    return null;
+                }
+            }
+        }
+
+        public DataSet ListarUsuarioPorEmail(string email)
+        {
+            DataSet result = new DataSet();
+            string conexion = "";
+
+            conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(conexion))
+            {
+                try
+                {
+                    con.Open();
+
+                    string cadena = "SELECT * FROM Usuario WHERE email = @email;";
+
+                    using (SqlCommand cmd = new SqlCommand(cadena, con))
+                    {
+                        cmd.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = email;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(result);
+
+                            if (result.Tables.Count > 0)
+                            {
+                                result.Tables[0].TableName = "Lista";
+                            }
+                        }
+                    }
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error en listarUsuario: {ex.Message.ToString()}");
+                    return null;
+                }
+            }
         }
 
         public class AuthenticationPassword
@@ -207,7 +281,6 @@ namespace api_OlimpiadasChapinas.Models.Usuario
                         return false; // Esto debe cambiar para mostrarse en pantalla
                     }
                 }
-
                 return false;
             }
         }
