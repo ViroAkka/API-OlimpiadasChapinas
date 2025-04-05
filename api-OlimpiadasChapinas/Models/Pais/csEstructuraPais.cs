@@ -18,10 +18,5 @@ namespace api_OlimpiadasChapinas.Models.Pais
             public int respuesta { get; set; }
             public string descripcionRespuesta { get; set; }
         }
-
-        public class requestEliminarPais
-        {
-            public string idPais { get; set; }
-        }
     }
 }

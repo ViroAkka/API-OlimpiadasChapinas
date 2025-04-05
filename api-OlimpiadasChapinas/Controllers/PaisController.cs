@@ -11,31 +11,38 @@ namespace api_OlimpiadasChapinas.Controllers
     public class PaisController : ApiController
     {
         [HttpPost]
-        [Route("rest/api/insertarPais")]
-        public IHttpActionResult insertarPais(requestPais model)
+        [Route("rest/api/InsertarPais")]
+        public IHttpActionResult InsertarPais(requestPais model)
         {
-            return Ok(new csPais().insertarPais(model.idPais,model.nombre));
+            return Ok(new csPais().InsertarPais(model.idPais,model.nombre));
         }
 
         [HttpPost]
-        [Route("rest/api/actualizarPais")]
-        public IHttpActionResult actualizarPais(requestPais model) 
+        [Route("rest/apiAactualizarPais")]
+        public IHttpActionResult ActualizarPais(requestPais model) 
         {
-            return Ok(new csPais().actualizarPais(model.idPais, model.nombre));
+            return Ok(new csPais().ActualizarPais(model.idPais, model.nombre));
         }
 
         [HttpPost]
-        [Route("rest/api/eliminarPais")]
-        public IHttpActionResult eliminarPais(requestEliminarPais model)
+        [Route("rest/api/EliminarPais")]
+        public IHttpActionResult EliminarPais(requestPais model)
         {
-            return Ok(new csPais().eliminarPais(model.idPais));
+            return Ok(new csPais().EliminarPais(model.idPais));
         }
 
         [HttpGet]
-        [Route("rest/api/listarPais")]
-        public IHttpActionResult listarPais()
+        [Route("rest/api/ListarPais")]
+        public IHttpActionResult ListarPais()
         {
-            return Ok(new csPais().listarPais());
+            return Ok(new csPais().ListarPais());
+        }
+
+        [HttpGet]
+        [Route("rest/api/ListarPaisPorID")]
+        public IHttpActionResult ListarPaisPorID(string idPais)
+        {
+            return Ok(new csPais().ListarPaisPorID(idPais));
         }
     }
 }

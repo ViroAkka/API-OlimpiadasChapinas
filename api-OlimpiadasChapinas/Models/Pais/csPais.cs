@@ -11,7 +11,7 @@ namespace api_OlimpiadasChapinas.Models.Pais
 {
     public class csPais
     {
-        public responsePais insertarPais(string idPais, string nombre)
+        public responsePais InsertarPais(string idPais, string nombre)
         {
             responsePais result = new responsePais();
             string conexion = "";
@@ -46,7 +46,7 @@ namespace api_OlimpiadasChapinas.Models.Pais
             return result;
         }
 
-        public responsePais actualizarPais(string idPais, string nombre)
+        public responsePais ActualizarPais(string idPais, string nombre)
         {
             responsePais result = new responsePais();
             string conexion = "";
@@ -81,7 +81,7 @@ namespace api_OlimpiadasChapinas.Models.Pais
             return result;
         }
 
-        public responsePais eliminarPais(string idPais)
+        public responsePais EliminarPais(string idPais)
         {
             responsePais result = new responsePais();
             string conexion = "";
@@ -113,7 +113,7 @@ namespace api_OlimpiadasChapinas.Models.Pais
             return result;
         }
 
-        public DataSet listarPais()
+        public DataSet ListarPais()
         {
             DataSet result = new DataSet();
             string conexion = "";
@@ -134,6 +134,44 @@ namespace api_OlimpiadasChapinas.Models.Pais
                         {
                             adapter.Fill(result);
                             
+                            if (result.Tables.Count > 0)
+                            {
+                                result.Tables[0].TableName = "Lista";
+                            }
+                        }
+                    }
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error en listarPais: {ex.Message.ToString()}");
+                    return null;
+                }
+            }
+        }
+
+        public DataSet ListarPaisPorID(string idPais)
+        {
+            DataSet result = new DataSet();
+            string conexion = "";
+
+            conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(conexion))
+            {
+                try
+                {
+                    con.Open();
+
+                    string cadena = "SELECT * FROM Pais WHERE idPais = @idPais;";
+
+                    using (SqlCommand cmd = new SqlCommand(cadena, con))
+                    {
+                        cmd.Parameters.Add("@idPais", SqlDbType.Char, 3).Value = idPais;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(result);
+
                             if (result.Tables.Count > 0)
                             {
                                 result.Tables[0].TableName = "Lista";
