@@ -147,5 +147,41 @@ namespace api_OlimpiadasChapinas.Models.Premiacion
                 }
             }
         }
+
+        public DataSet ListarPremiacionPorID(int idPremiacion)
+        {
+            DataSet result = new DataSet();
+            string conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(conexion))
+            {
+                try
+                {
+                    con.Open();
+
+                    string cadena = "SELECT * FROM Premiacion WHERE idPremiacion = @idPremiacion;";
+
+                    using (SqlCommand cmd = new SqlCommand(cadena, con))
+                    {
+                        cmd.Parameters.Add("@idPremiacion", SqlDbType.Int).Value = idPremiacion;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(result);
+
+                            if (result.Tables.Count > 0)
+                            {
+                                result.Tables[0].TableName = "Lista Premiacion";
+                            }
+                        }
+                    }
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ocurrió un error en ListarPremiacion: {ex.Message.ToString()}");
+                    return null;
+                }
+            }
+        }
     }
 }

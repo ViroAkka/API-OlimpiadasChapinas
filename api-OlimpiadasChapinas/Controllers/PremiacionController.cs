@@ -37,5 +37,12 @@ namespace api_OlimpiadasChapinas.Controllers
         {
             return Ok(new csPremiacion().ListarPremiacion());
         }
+
+        [HttpGet]
+        [Route("rest/api/ListarPremiacionPorID")]
+        public IHttpActionResult ListarPremiacionPorID(int idPremiacion)
+        {
+            return Ok(new csPremiacion().ListarPremiacionPorID(idPremiacion));
+        }
     }
 }
