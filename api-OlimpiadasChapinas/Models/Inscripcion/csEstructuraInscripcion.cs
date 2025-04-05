@@ -13,14 +13,6 @@ namespace api_OlimpiadasChapinas.Models.Inscripcion
             public int idParticipante { get; set; }
             public int idPago { get; set; }
             public string fuentePublicidad { get; set; }
-        }
-
-        public class requestActualizarInscripcion
-        {
-            public int idEvento { get; set; }
-            public int idParticipante { get; set; }
-            public int idPago { get; set; }
-            public string fuentePublicidad { get; set; }
             public int idEventoActualizado { get; set; }
             public int idParticipanteActualizado { get; set; }
             public int idPagoActualizado { get; set; }

@@ -20,7 +20,7 @@ namespace api_OlimpiadasChapinas.Controllers
 
         [HttpPost]
         [Route("rest/api/ActualizarInscripcion")]
-        public IHttpActionResult ActualizarInscripcion(requestActualizarInscripcion model)
+        public IHttpActionResult ActualizarInscripcion(requestInscripcion model)
         {
             return Ok(new csInscripcion().ActualizarInscripcion(model.idEvento, model.idParticipante, model.idPago, model.fuentePublicidad, model.idEventoActualizado, model.idParticipanteActualizado, model.idPagoActualizado));
         }
@@ -37,6 +37,13 @@ namespace api_OlimpiadasChapinas.Controllers
         public IHttpActionResult ListarInscripcion()
         {
             return Ok(new csInscripcion().ListarInscripcion());
+        }
+
+        [HttpGet]
+        [Route("rest/api/ListarInscripcionPorID")]
+        public IHttpActionResult ListarInscripcionPorID(int idEvento, int idParticipante, int idPago)
+        {
+            return Ok(new csInscripcion().ListarInscripcionPorID(idEvento, idParticipante, idPago));
         }
     }
 }
