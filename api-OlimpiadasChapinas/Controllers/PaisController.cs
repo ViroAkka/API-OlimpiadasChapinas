@@ -18,7 +18,7 @@ namespace api_OlimpiadasChapinas.Controllers
         }
 
         [HttpPost]
-        [Route("rest/apiAactualizarPais")]
+        [Route("rest/api/ActualizarPais")]
         public IHttpActionResult ActualizarPais(requestPais model) 
         {
             return Ok(new csPais().ActualizarPais(model.idPais, model.nombre));

@@ -64,7 +64,7 @@ namespace api_OlimpiadasChapinas.Models.Pais
 
                     using (SqlCommand cmd = new SqlCommand(cadena, con))
                     {
-                        cmd.Parameters.Add("@nombre", SqlDbType.Char, 3).Value = nombre;
+                        cmd.Parameters.Add("@nombre", SqlDbType.NVarChar, 50).Value = nombre;
                         cmd.Parameters.Add("@idPais", SqlDbType.Char, 3).Value = idPais;
 
                         result.respuesta = cmd.ExecuteNonQuery();
