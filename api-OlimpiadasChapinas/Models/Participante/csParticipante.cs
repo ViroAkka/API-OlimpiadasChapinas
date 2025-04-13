@@ -11,11 +11,37 @@ namespace api_OlimpiadasChapinas.Models.Participante
 {
     public class csParticipante
     {
+        public fecha FormatearFecha(string fechaIngresada)
+        {
+            fecha fechaFormateada = new fecha();
+
+            if (fechaIngresada.Substring(1, 1) == "/" || fechaIngresada.Substring(1, 1) == "-")
+            {
+                fechaIngresada = "0" + fechaIngresada;
+            }
+
+            if (fechaIngresada.Substring(2, 1) == "/" || fechaIngresada.Substring(2, 1) == "-")
+            {
+                fechaFormateada.day = int.Parse(fechaIngresada.Substring(0, 2));
+                fechaFormateada.month = int.Parse(fechaIngresada.Substring(3, 2));
+                fechaFormateada.year = int.Parse(fechaIngresada.Substring(6, 4));
+            }
+            else
+            {
+                fechaFormateada.day = int.Parse(fechaIngresada.Substring(8, 2));
+                fechaFormateada.month = int.Parse(fechaIngresada.Substring(5, 2));
+                fechaFormateada.year = int.Parse(fechaIngresada.Substring(0, 4));
+            }
+
+            return fechaFormateada;
+        }
         public responseParticipante InsertarParticipante(string idPais, int idUsuario, string fechaNacimiento, double altura, double peso, string genero)
         {
             responseParticipante result = new responseParticipante();
             string conexion = "";
+            fecha nacimiento = new fecha();
 
+            nacimiento = FormatearFecha(fechaNacimiento);
             conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(conexion))
@@ -31,7 +57,12 @@ namespace api_OlimpiadasChapinas.Models.Participante
                     {
                         cmd.Parameters.Add("@idPais", SqlDbType.Char, 3).Value = idPais;
                         cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
-                        cmd.Parameters.Add("@fechaNacimiento", SqlDbType.Date).Value = fechaNacimiento;
+                        cmd.Parameters.Add(new SqlParameter
+                        {
+                            ParameterName = "@fechaNacimiento",
+                            SqlDbType = SqlDbType.Date,
+                            Value = new DateTime(nacimiento.year, nacimiento.month, nacimiento.day)
+                        });
                         cmd.Parameters.Add(new SqlParameter{
                             ParameterName = "@altura",
                             SqlDbType = SqlDbType.Decimal,
@@ -67,6 +98,9 @@ namespace api_OlimpiadasChapinas.Models.Participante
         {
             responseParticipante result = new responseParticipante();
             string conexion = "";
+            fecha nacimiento = new fecha();
+
+            nacimiento = FormatearFecha(fechaNacimiento);
 
             conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
 
@@ -84,7 +118,12 @@ namespace api_OlimpiadasChapinas.Models.Participante
                     {
                         cmd.Parameters.Add("@idPais", SqlDbType.Char, 3).Value = idPais;
                         cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
-                        cmd.Parameters.Add("@fechaNacimiento", SqlDbType.Date).Value = fechaNacimiento;
+                        cmd.Parameters.Add(new SqlParameter
+                        {
+                            ParameterName = "@fechaNacimiento",
+                            SqlDbType = SqlDbType.Date,
+                            Value = new DateTime(nacimiento.year, nacimiento.month, nacimiento.day)
+                        });
                         cmd.Parameters.Add("@idParticipante", SqlDbType.Int).Value = idParticipante;
                         cmd.Parameters.Add(new SqlParameter
                         {

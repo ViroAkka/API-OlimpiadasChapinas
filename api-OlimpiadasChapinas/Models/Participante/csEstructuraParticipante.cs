@@ -23,5 +23,12 @@ namespace api_OlimpiadasChapinas.Models.Participante
             public int respuesta { get; set; }
             public string descripcionRespuesta { get; set; }
         }
+
+        public class fecha
+        {
+            public int day { get; set; }
+            public int month { get; set; }
+            public int year { get; set; }
+        }
     }
 }
