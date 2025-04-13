@@ -45,5 +45,47 @@ namespace api_OlimpiadasChapinas.Controllers
         {
             return Ok(new csInscripcion().ListarInscripcionPorID(idEvento, idParticipante, idPago));
         }
+
+        [HttpGet]
+        [Route("rest/api/ListarInscripcionPorEvento")]
+        public IHttpActionResult ListarInscripcionPorEvento(int idEvento)
+        {
+            return Ok(new csInscripcion().ListarInscripcionPorEvento(idEvento));
+        }
+
+        [HttpGet]
+        [Route("rest/api/ListarInscripcionPorParticipante")]
+        public IHttpActionResult ListarInscripcionPorParticipante(int idParticipante)
+        {
+            return Ok(new csInscripcion().ListarInscripcionPorParticipante(idParticipante));
+        }
+
+        [HttpGet]
+        [Route("rest/api/ListarInscripcionPorPago")]
+        public IHttpActionResult ListarInscripcionPorPago(int idPago)
+        {
+            return Ok(new csInscripcion().ListarInscripcionPorPago(idPago));
+        }
+
+        [HttpGet]
+        [Route("rest/api/ListarInscripcionPorEventoParticipante")]
+        public IHttpActionResult ListarInscripcionPorEventoParticipante(int idEvento, int idParticipante)
+        {
+            return Ok(new csInscripcion().ListarInscripcionPorEventoParticipante(idEvento, idParticipante));
+        }
+
+        [HttpGet]
+        [Route("rest/api/ListarInscripcionPorEventoPago")]
+        public IHttpActionResult ListarInscripcionPorEventoPago(int idEvento, int idPago)
+        {
+            return Ok(new csInscripcion().ListarInscripcionPorEventoPago(idEvento, idPago));
+        }
+
+        [HttpGet]
+        [Route("rest/api/ListarInscripcionPorParticipantePago")]
+        public IHttpActionResult ListarInscripcionPorParticipantePago(int idParticipante, int idPago)
+        {
+            return Ok(new csInscripcion().ListarInscripcionPorParticipantePago(idParticipante, idPago));
+        }
     }
 }
