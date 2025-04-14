@@ -131,7 +131,7 @@ namespace api_OlimpiadasChapinas.Models.Participante
                             SqlDbType = SqlDbType.Decimal,
                             Precision = 5,
                             Scale = 2,
-                            Value = altura
+                            Value = Math.Round(altura, 2)
                         });
                         cmd.Parameters.Add(new SqlParameter
                         {
@@ -139,7 +139,7 @@ namespace api_OlimpiadasChapinas.Models.Participante
                             SqlDbType = SqlDbType.Decimal,
                             Precision = 5,
                             Scale = 2,
-                            Value = peso
+                            Value = Math.Round(peso, 2)
                         });
                         cmd.Parameters.Add("@genero", SqlDbType.Char, 5).Value = genero;
 
