@@ -19,6 +19,16 @@ namespace api_OlimpiadasChapinas.Models.Usuario
             public string contraseñaActualizada { get; set; }
         }
 
+        public class requestUsuarioActualizacion
+        {
+            public string nombre { get; set; }
+            public string apellido { get; set; }
+            public string email { get; set; }
+            public string telefono { get; set; }
+            public string contraseñaAlmacenada { get; set; }
+            public string contraseñaActualizada { get; set; }
+        }
+
         public class responseUsuario
         {
             public int respuesta { get; set; }

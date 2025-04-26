@@ -12,7 +12,6 @@ namespace api_OlimpiadasChapinas.Controllers
     {
         [HttpPost]
         [Route("rest/api/InsertarUsuario")]
-
         public IHttpActionResult InsertarUsuario(requestUsuario model)
         {
             return Ok(new csUsuario().InsertarUsuario(model.nombre, model.apellido, model.email, model.contraseña_hash, model.telefono, model.DNI));
@@ -20,7 +19,7 @@ namespace api_OlimpiadasChapinas.Controllers
 
         [HttpPost]
         [Route("rest/api/ActualizarUsuario")]
-        public IHttpActionResult ActualizarUsuario(requestUsuario model)
+        public IHttpActionResult ActualizarUsuario(requestUsuarioActualizacion model)
         {
             return Ok(new csUsuario().ActualizarUsuario(model.nombre, model.apellido, model.email, model.contraseñaAlmacenada, model.contraseñaActualizada, model.telefono));
         }
