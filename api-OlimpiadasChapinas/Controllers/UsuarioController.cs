@@ -51,5 +51,17 @@ namespace api_OlimpiadasChapinas.Controllers
         {
             return Ok(new csUsuario().ListarUsuarioPorEmail(email));
         }
+
+        [HttpPost]
+        [Route("rest/api/loginUsuario")]
+        public IHttpActionResult loginUsuario(requestUsuario model)
+        {
+            if(model.email == "" || model.contraseña_hash == "")
+            {
+                return Unauthorized();
+            }
+
+            return Ok(new csUsuario().loginUsuario(model.email, model.contraseña_hash));
+        }
     }
 }

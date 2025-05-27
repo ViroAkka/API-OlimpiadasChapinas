@@ -17,7 +17,7 @@ namespace api_OlimpiadasChapinas.Models.Usuario
             responseUsuario result = new responseUsuario();
             string conexion = "";
             string contraseñaHasheada = "";
-            
+
             conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(conexion))
@@ -58,7 +58,7 @@ namespace api_OlimpiadasChapinas.Models.Usuario
         {
             responseUsuario result = new responseUsuario();
             string conexion = "";
-            
+
             conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(conexion))
@@ -73,7 +73,7 @@ namespace api_OlimpiadasChapinas.Models.Usuario
 
                     AuthenticationPassword verificacionContraseña = new AuthenticationPassword();
                     bool contraseñaVerificada = verificacionContraseña.VerificarContraseña(email, contraseñaAlmacenada);
-                    
+
                     if (contraseñaVerificada)
                     {
                         using (SqlCommand cmd = new SqlCommand(cadena, con))
@@ -87,11 +87,11 @@ namespace api_OlimpiadasChapinas.Models.Usuario
                             result.respuesta = cmd.ExecuteNonQuery();
                             result.descripcionRespuesta = "Operación realizada exitosamente";
                         }
-                    } 
+                    }
                     else
                     {
                         result.respuesta = 0;
-                        result.descripcionRespuesta = $"Contraseña ingresada es incorrecta" + contraseñaVerificada;
+                        result.descripcionRespuesta = $"Contraseña ingresada es incorrecta: " + contraseñaVerificada;
                     }
                 }
                 catch (Exception ex)
@@ -127,7 +127,7 @@ namespace api_OlimpiadasChapinas.Models.Usuario
                         result.descripcionRespuesta = "Operación realizada exitosamente";
                     }
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     result.respuesta = 0;
                     result.descripcionRespuesta = $"Ocurrió un error en la transacción: {ex.Message.ToString()}";
@@ -144,7 +144,7 @@ namespace api_OlimpiadasChapinas.Models.Usuario
 
             conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
 
-            using (SqlConnection con = new SqlConnection(conexion)) 
+            using (SqlConnection con = new SqlConnection(conexion))
             {
                 try
                 {
@@ -170,7 +170,7 @@ namespace api_OlimpiadasChapinas.Models.Usuario
                 {
                     Console.WriteLine($"Error en listarUsuario: {ex.Message.ToString()}");
                     return null;
-                }   
+                }
             }
         }
 
@@ -276,13 +276,49 @@ namespace api_OlimpiadasChapinas.Models.Usuario
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         return false; // Esto debe cambiar para mostrarse en pantalla
                     }
                 }
                 return false;
             }
+        }
+
+        public requestUsuario loginUsuario(string email, string password)
+        {
+            requestUsuario usuario = new requestUsuario();
+            string conexion = ConfigurationManager.ConnectionStrings["cnConnection"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(conexion))
+            {
+                try
+                {
+                    con.Open();
+
+                    AuthenticationPassword verificacionContraseña = new AuthenticationPassword();
+                    bool contraseñaVerificada = verificacionContraseña.VerificarContraseña(email, password);
+
+                    if (contraseñaVerificada)
+                    {
+                        usuario.email = email;
+                        usuario.contraseña_hash = password;
+                    }
+                    else
+                    {
+                        usuario.email = "";
+                        usuario.contraseña_hash = "";
+                    }
+
+                }
+                catch 
+                {
+                    usuario.email = "";
+                    usuario.contraseña_hash = "";
+                }
+            }
+
+            return usuario;
         }
     }
 }

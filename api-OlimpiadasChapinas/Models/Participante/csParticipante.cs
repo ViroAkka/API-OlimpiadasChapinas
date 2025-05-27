@@ -13,7 +13,7 @@ namespace api_OlimpiadasChapinas.Models.Participante
     {
         public fecha FormatearFecha(string fechaIngresada)
         {
-            fecha fechaFormateada = new fecha();
+            fecha fechaFormateada = new fecha(); 
 
             if (fechaIngresada.Substring(1, 1) == "/" || fechaIngresada.Substring(1, 1) == "-")
             {
